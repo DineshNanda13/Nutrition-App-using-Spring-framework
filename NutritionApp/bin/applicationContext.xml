@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context.xsd">
+    
+    <!-- load the properties file -->
+    <context:property-placeholder location="classpath:nutritionistInfo.properties"/>
+
+	<!-- add entry to enable component scanning -->
+
+	<context:component-scan
+		base-package="com.NutritionApp" />
+		
+		<!-- Extra service bean -->
+		<bean 
+		id = "my_workouts"
+		class = "com.NutritionApp.MyWorkoutPlan"></bean>
+		
+		<bean
+		id = "diet_Plan"
+		class = "com.NutritionApp.ThursdayDiet">
+		
+		<!-- constructor injection -->
+		
+		<constructor-arg ref="my_workouts"/>
+		
+		</bean>
+		
+		<bean
+		id = "my_Friday"
+		class = "com.NutritionApp.FridayDiet">
+		
+		<!-- setter injection -->
+		
+		<property name="workouts" ref="my_workouts"/>
+		
+		<!-- injecting literal values -->
+		
+		<property name="name" value = "${foo.name}"></property>
+		<property name="email_address" value = "${foo.email}"></property>
+		
+		</bean>
+
+</beans>
+
+
+
+
+
